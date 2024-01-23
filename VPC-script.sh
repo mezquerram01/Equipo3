@@ -17,7 +17,7 @@ echo "Se ha asociado la red $subnet_public1_id a la tabla de enrutamiento $publi
 #
 # Crear la subred pública2
 subnet_public2_id=$(aws ec2 create-subnet --vpc-id $vpc_id --cidr-block 10.3.20.0/24 --availability-zone us-east-1b --tag-specifications 'ResourceType=subnet,Tags=[{Key=Name,Value=publica2}]' --output json | jq -r '.Subnet.SubnetId')
-La subred publica 2 se ha creado con la id $subnet_public2_id
+echo "La subred publica 2 se ha creado con la id $subnet_public2_id"
 #
 # Asociarla con la tabla de enrutamiento
 aws ec2 associate-route-table --subnet-id $subnet_public2_id --route-table-id $public_route_table_id
