@@ -1,0 +1,32 @@
+pid_file: "/var/run/matrix-synapse.pid"
+listeners:
+  - port: 8008
+    tls: false
+    type: http
+    x_forwarded: true
+    bind_addresses: ['::1', '127.0.0.1', '10.13.2.247']
+    resources:
+      - names: [client, federation]
+        compress: false
+log_config: "/etc/matrix-synapse/log.yaml"
+media_store_path: /var/lib/matrix-synapse/media
+signing_key_path: "/etc/matrix-synapse/homeserver.signing.key"
+trusted_key_servers:
+  - server_name: "matrix.org"
+enable_registration: false
+registration_shared_secret: "we228rCyj0jbJF3yANIA5oNXgVLqn2AA"
+federation:
+  enabled: true
+federation_listener:
+  port: 8448
+serve_server_wellknown: true
+federation_domain_whitelist:
+  - "matrix.equipo1msql.duckdns.org"
+  - "separartodo.duckdns.org"
+  - "equipo2matrix.duckdns.org"
+  - "failchat.duckdns.org"
+  - "failchat.duckdns.org:8448"
+  - "salmonesmatrix.duckdns.org"
+  - "matrixjuan.duckdns.org"
+  - "nginxequipo3.duckdns.org"
+  - "equipo1si.duckdns.org"
