@@ -9,7 +9,7 @@ echo "Se ha descrito la subred1 con el nombre publica1 con la id $subnet_public1
 wget https://raw.githubusercontent.com/alexchispa/Equipo3/Equipo3/script-nginx
 echo "Se ha descargado el archivo script-nginx"
 # Lanzar una instancia EC2 utilizando la VPC 
-ec2_nginx=$(aws ec2 run-instances --image-id ami-0c7217cdde317cfec --instance-type t2.micro --key-name $clave --subnet-id $subnet_public1_id --associate-public-ip-address --user-data file://./script-nginx --t>
+ec2_nginx=$(aws ec2 run-instances --image-id ami-0c7217cdde317cfec --instance-type t2.micro --key-name $clave --subnet-id $subnet_public1_id --associate-public-ip-address --user-data file://./script-nginx --tag-specifications 'ResourceType=instance,Tags=[{Key=Name,Value=nginx3}]' --output json)
 echo "Se ha creado una instancia de ubuntu 20.04 con el par de claves $clave en la subred $subnet_public1_id"
 # Obtener la ID del grupo de seguridad "nginx"
 nginx_security_group_id=$(aws ec2 describe-security-groups --filters "Name=tag:Name,Values=nginx" --query 'SecurityGroups[0].GroupId' --output json | jq -r '.')
