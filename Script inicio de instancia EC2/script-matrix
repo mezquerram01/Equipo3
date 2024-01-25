@@ -1,0 +1,57 @@
+#!/bin/bash
+
+sudo apt update
+
+sudo hostnamectl set-hostname Matrix215
+
+sudo apt-get install -y curl wget
+
+sudo apt-get install expect -y
+
+sudo apt install -y lsb-release wget apt-transport-https
+
+sudo wget -qO /usr/share/keyrings/matrix-org-archive-keyring.gpg https://packages.matrix.org/debian/matrix-org-archive-keyring.gpg
+
+echo "deb [signed-by=/usr/share/keyrings/matrix-org-archive-keyring.gpg] https://packages.matrix.org/debian/ $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/matrix-org.list
+
+# Especifica el valor deseado para la ventana emergente
+serverName="matrix215.duckdns.org"
+
+# Preconfigura debconf con la respuesta deseada
+echo "matrix-synapse matrix-synapse/server-name string ${serverName}" | sudo debconf-set-selections
+echo "matrix-synapse matrix-synapse/report-stats boolean false" | sudo debconf-set-selections
+
+sudo apt update
+
+# Utiliza expect para automatizar la interacción con la ventana emergente
+sudo expect -c "
+spawn sudo apt-get install -y matrix-synapse-py3
+expect \"Do you want to report anonymous statistics?\" { send \"no\r\" }
+expect eof
+"
+
+sudo systemctl start matrix-synapse
+
+sudo systemctl enable matrix-synapse
+
+generatedKey=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
+
+# Obtén la dirección IP de la instancia de AWS
+ip4=$(curl ifconfig.me)
+
+# Crea y configura el directorio de Synapse
+# sudo mkdir -p /etc/matrix-synapse
+# sudo chown -R $USER /etc/matrix-synapse
+cd /etc/matrix-synapse
+
+# Descarga el archivo de configuración desde GitHub
+sudo wget https://raw.githubusercontent.com/alexchispa/Equipo3/Equipo3/homeserver.yaml -O homeserver.yaml
+# sudo https://raw.githubusercontent.com/mezquerram01/Equipo3/main/homeserver.yaml -O homeserver.yaml
+
+sudo sed -i "s/{{GENERATED_KEY_PLACEHOLDER}}/$generatedKey/" homeserver.yaml
+
+# Modifica la configuración según tus necesidades
+# Puedes editar el archivo homeserver.yaml según la documentación de Matrix.
+
+# Inicia Synapse
+sudo systemctl restart matrix-synapse
