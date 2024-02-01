@@ -1,0 +1,9 @@
+database:
+  name: psycopg2
+  args:
+    user: manuel
+    password: manuel
+    database: matrix_synapse
+    host: 10.209.11.192
+    cp_max: 5
+    cp_min: 10

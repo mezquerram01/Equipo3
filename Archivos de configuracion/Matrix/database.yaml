@@ -1,9 +1,0 @@
-database:
-  name: psycopg2
-  args:
-    user: admin
-    password: 1234
-    database: matrix
-    host: 10.13.2.245
-    cp_max: 5
-    cp_min: 10

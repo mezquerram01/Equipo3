@@ -1,0 +1,3 @@
+turn_uris: [ "turn:manuelcoturn.duckdns.org?transport=udp", "turn:manuelcoturn.duckdns.org?transport=tc>turn_shared_secret: "ykb7tBztd8wSQTbnkL2njrA94YAVRsSk"
+turn_user_lifetime: 86400000
+turn_allow_guests: True

@@ -1,10 +1,11 @@
+server_name: "manuelnginx.duckdns.org"
 pid_file: "/var/run/matrix-synapse.pid"
 listeners:
   - port: 8008
     tls: false
     type: http
     x_forwarded: true
-    bind_addresses: ['::1', '127.0.0.1', '10.13.2.247']
+    bind_addresses: ['10.209.11.159']
     resources:
       - names: [client, federation]
         compress: false
@@ -14,13 +15,14 @@ signing_key_path: "/etc/matrix-synapse/homeserver.signing.key"
 trusted_key_servers:
   - server_name: "matrix.org"
 enable_registration: false
-registration_shared_secret: "we228rCyj0jbJF3yANIA5oNXgVLqn2AA"
+registration_shared_secret: "kFl4gtuhmKgTeOVT47rjPTv1X7J0xmqv"
 federation:
   enabled: true
 federation_listener:
   port: 8448
 serve_server_wellknown: true
 federation_domain_whitelist:
+  - "besteiromatrix.duckdns.org"
   - "matrix.equipo1msql.duckdns.org"
   - "separartodo.duckdns.org"
   - "equipo2matrix.duckdns.org"
@@ -30,3 +32,7 @@ federation_domain_whitelist:
   - "matrixjuan.duckdns.org"
   - "nginxequipo3.duckdns.org"
   - "equipo1si.duckdns.org"
+  - "manuelnginx.duckdns.org"
+  - "nginx201.duckdns.org"
+  - "asierdm.duckdns.org"
+  - "nginxamc.duckdns.org"

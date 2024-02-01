@@ -2,7 +2,7 @@
 
 sudo apt update
 
-sudo hostnamectl set-hostname Matrix215
+sudo hostnamectl set-hostname manuelmatrix
 
 sudo apt-get install -y curl wget
 
@@ -45,8 +45,7 @@ ip4=$(curl ifconfig.me)
 cd /etc/matrix-synapse
 
 # Descarga el archivo de configuración desde GitHub
-sudo wget https://raw.githubusercontent.com/alexchispa/Equipo3/Equipo3/homeserver.yaml -O homeserver.yaml
-# sudo https://raw.githubusercontent.com/mezquerram01/Equipo3/main/homeserver.yaml -O homeserver.yaml
+sudo https://raw.githubusercontent.com/mezquerram01/Equipo3/main/homeserver.yaml -O homeserver.yaml
 
 sudo sed -i "s/{{GENERATED_KEY_PLACEHOLDER}}/$generatedKey/" homeserver.yaml
 

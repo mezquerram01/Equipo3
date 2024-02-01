@@ -2,7 +2,7 @@
 
 sudo apt update
 
-sudo hostnamectl set-hostname Nginx215
+sudo hostnamectl set-hostname manuelnginx
 
 sudo apt-get install -y curl wget
 
@@ -15,15 +15,15 @@ ST = Cantabria
 L = Santander
 O = educantabria
 OU =
-CN = Nginx215.duckdns.org
+CN = manuelnginx.duckdns.org
 emailAddress = ubuntu
 " | sudo tee /etc/ssl/openssl.cnf
 
 # Crear certificado autofirmado
 sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
-  -keyout /etc/ssl/private/nginx215.duckdns.org.key \
-  -out /etc/ssl/certs/nginx215.crt \
-  -subj "/C=ES/ST=Cantabria/L=Santander/O=educantabria/CN=nginx215.duckdns.org/emailAddress=ubuntu@gmail.com"
+  -keyout /etc/ssl/private/manuelnginx.duckdns.org.key \
+  -out /etc/ssl/certs/manuelnginx.crt \
+  -subj "/C=ES/ST=Cantabria/L=Santander/O=educantabria/CN=manuelnginx.duckdns.org/emailAddress=ubuntu@gmail.com"
 
 # Crear carpeta duckdns con los permisos adecuados
 sudo mkdir -m 700 /home/ubuntu/duckdns
@@ -45,17 +45,17 @@ sudo apt update
 sudo apt install nginx -y
 
 echo 'server {
-    if ($host = nginx215.duckdns.org) {
+    if ($host = manuelnginx.duckdns.org) {
         return 301 https://$host$request_uri;
     } # managed by Certbot
 
 
-    if ($host = nginx215.duckdns.org) {
+    if ($host = manuelnginx.duckdns.org) {
         return 301 https://$host$request_uri;
     } # manejado por Certbot
 
     listen 80;
-    server_name nginx215.duckdns.org;
+    server_name manuelnginx.duckdns.org;
     return 301 https://$host$request_uri;
 
 
@@ -63,10 +63,10 @@ echo 'server {
 
 server {
 listen 443 ssl;
-server_name nginx215.duckdns.org;
-    ssl_certificate /etc/ssl/certs/nginx215.crt;
+server_name manuelnginx.duckdns.org;
+    ssl_certificate /etc/ssl/certs/nmanuelnginx.crt;
  # manejado por Certbot
-    ssl_certificate_key /etc/ssl/private/nginx215.duckdns.org.key; # manejado por Certbot
+    ssl_certificate_key /etc/ssl/private/manuelnginx.duckdns.org.key; # manejado por Certbot
 
 location /_mtrix {
 proxy_pass http://10.13.2.247:8008;
@@ -82,18 +82,18 @@ server {
 listen 8443 ssl;
 server_name nginx215.duckdns.org;
 
-ssl_certificate /etc/ssl/certs/nginx215.crt; # manejado por Certbot
-ssl_certificate_key /etc/ssl/private/nginx215.duckdns.org.key; # mane>
+ssl_certificate /etc/ssl/certs/manuelnginx.crt; # manejado por Certbot
+ssl_certificate_key /etc/ssl/private/manuelnginx.duckdns.org.key; # mane>
 
-location /_mtrix {
+location /_matrix {
 proxy_pass http://10.13.2.247:8008;
 
 proxy_set_header X-Forwarded-For $remote_addr;
 client_max_body_size 10M;
 }
-}' | sudo tee /etc/nginx/sites-available/matrix215
+}' | sudo tee /etc/nginx/sites-available/manuelnginx
 
-sudo ln -s /etc/nginx/sites-available/matrix215 /etc/nginx/sites-enabled/
+sudo ln -s /etc/nginx/sites-available/manuelnginx /etc/nginx/sites-enabled/
 sudo nginx -t
 
 sudo systemctl restart nginx
@@ -105,4 +105,4 @@ sudo snap install --classic certbot
 
 sudo ln -s /snap/bin/certbot /usr/bin/certbot
 
-sudo certbot --nginx -d nginx215.duckdns.org --non-interactive --agree-tos --email ubuntu@gmail.com
+sudo certbot --nginx -d manuelnginx.duckdns.org --non-interactive --agree-tos --email ubuntu@gmail.com
